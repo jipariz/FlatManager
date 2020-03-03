@@ -11,3 +11,7 @@ First functionality which this app will have will be tracking whos turn is to cl
   * Flats and users data will be hold at firebase database
   * Possible notification which will be notifing upcoming or unfinished duty.
   * Logout option
+  
+## Brief desing
+ https://projects.invisionapp.com/freehand/document/zXbrKxv4G
+![](https://i.imgur.com/ca24rsC.png)
