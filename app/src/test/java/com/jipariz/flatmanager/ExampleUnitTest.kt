@@ -1,4 +1,4 @@
-package com.example.flatmanager
+package com.jipariz.flatmanager
 
 import org.junit.Test
 
