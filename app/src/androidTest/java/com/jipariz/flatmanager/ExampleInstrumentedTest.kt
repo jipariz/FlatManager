@@ -1,4 +1,4 @@
-package com.example.flatmanager
+package com.jipariz.flatmanager
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
