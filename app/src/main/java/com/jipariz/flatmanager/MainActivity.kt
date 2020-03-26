@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
+import com.jipariz.flatmanager.login.FirebaseLoginActivity
 import com.jipariz.flatmanager.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            startActivity(LoginActivity.getLaunchIntent(this))
+            //startActivity(LoginActivity.getLaunchIntent(this))
+            startActivity(FirebaseLoginActivity.getLaunchIntent(this))
             finish()
         }
     }
