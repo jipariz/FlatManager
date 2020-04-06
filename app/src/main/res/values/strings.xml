@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FlatManager</string>
     <string name="house_logo">House logo</string>
+    <string name="house_logo_contribution">Designed by Freepik</string>
 </resources>
