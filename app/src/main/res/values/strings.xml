@@ -2,4 +2,7 @@
     <string name="app_name">FlatManager</string>
     <string name="house_logo">House logo</string>
     <string name="house_logo_contribution">Designed by Freepik</string>
+    <string name="flat_code">flat code</string>
+    <string name="join_flat">Join flat</string>
+    <string name="create_new_flat">Create new flat</string>
 </resources>
