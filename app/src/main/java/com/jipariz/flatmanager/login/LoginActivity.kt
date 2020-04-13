@@ -16,6 +16,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.jipariz.flatmanager.MainActivity
 import com.jipariz.flatmanager.R
 import com.jipariz.flatmanager.databinding.ActivityLoginBinding
+import com.jipariz.flatmanager.firebase.database.DatabaseService
 import org.koin.android.ext.android.inject
 
 class LoginActivity: AppCompatActivity() {
@@ -26,6 +27,7 @@ class LoginActivity: AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private val firebaseAuth: FirebaseAuth by inject()
+    private val databaseService: DatabaseService by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +78,11 @@ class LoginActivity: AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-
+                databaseService.writeNewUser(
+                    userId = firebaseAuth.currentUser?.uid ?: "",
+                    username = firebaseAuth.currentUser?.displayName,
+                    email = firebaseAuth.currentUser?.email
+                )
                 startActivity(MainActivity.getLaunchIntent(this))
             } else {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
