@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".flat_choose.FlatChooseActivity" />
     </application>
 
 </manifest>

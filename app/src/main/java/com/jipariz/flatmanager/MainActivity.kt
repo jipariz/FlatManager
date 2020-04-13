@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
 import com.jipariz.flatmanager.login.LoginActivity
@@ -14,13 +15,44 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-        binding.logoutButton.setOnClickListener {
-            signOut()
+        setContentView(binding.root)
+
+        title=resources.getString(R.string.home_title)
+        loadFragment(HomeFragment())
+
+        binding.navigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.navigation_home-> {
+                    title=resources.getString(R.string.home_title)
+                    loadFragment(HomeFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.navigation_assignment-> {
+                    title=resources.getString(R.string.assignment_title)
+                    loadFragment(AssignmentFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.navigation_profile-> {
+                    title=resources.getString(R.string.profile_title)
+                    loadFragment(ProfileFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+            }
+            false
+
         }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onStart() {
@@ -30,11 +62,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(LoginActivity.getLaunchIntent(this))
             finish()
         }
-    }
-
-    private fun signOut() {
-        startActivity(LoginActivity.getLaunchIntent(this))
-        FirebaseAuth.getInstance().signOut()
     }
 
     companion object {
