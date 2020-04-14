@@ -34,7 +34,7 @@ class DatabaseService(val auth: FirebaseAuth) {
 
     suspend fun getUser(): User? {
         return try {
-          val data = userId?.let { database.document(it).get().await().toObject<User>() }
+          val data = userId?.let { users.document(it).get().await().toObject<User>() }
             data
           }   catch (e: Exception){
             null
