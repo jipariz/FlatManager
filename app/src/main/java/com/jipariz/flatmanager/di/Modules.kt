@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val appModule = module {
     single { FirebaseAuth.getInstance() }
-    single { DatabaseService() }
+    single { DatabaseService(get()) }
 }

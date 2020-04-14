@@ -7,10 +7,20 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
+import com.jipariz.flatmanager.firebase.database.DatabaseService
+import com.jipariz.flatmanager.global.hide
+import com.jipariz.flatmanager.global.show
 import com.jipariz.flatmanager.login.LoginActivity
+import kotlinx.coroutines.*
+import org.koin.android.ext.android.inject
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivityMainBinding
+    private val job = Job()
+
+    private val databaseService: DatabaseService by inject()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,8 +28,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        title=resources.getString(R.string.home_title)
-        loadFragment(HomeFragment())
+        launch {
+            val user = databaseService.getUser()
+            if(user?.flatId.isNullOrEmpty()){
+                title="Join flat"
+                loadFragment(JoinFlatFragment())
+                binding.navigationView.hide()
+            } else {
+                title=resources.getString(R.string.home_title)
+                loadFragment(HomeFragment())
+                binding.navigationView.show()
+            }
+        }
 
         binding.navigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
@@ -69,4 +89,7 @@ class MainActivity : AppCompatActivity() {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 }
