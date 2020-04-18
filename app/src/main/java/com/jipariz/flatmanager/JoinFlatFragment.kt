@@ -1,20 +1,22 @@
 package com.jipariz.flatmanager
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
+import android.text.InputType
 import android.view.View
-import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.jipariz.flatmanager.databinding.FragmentFlatChooseBinding
+import com.jipariz.flatmanager.databinding.FragmentJoinFlatBinding
 
 
-class JoinFlatFragment : Fragment(R.layout.fragment_flat_choose) {
-    private lateinit var binding: FragmentFlatChooseBinding
+class JoinFlatFragment : Fragment(R.layout.fragment_join_flat) {
+    private lateinit var binding: FragmentJoinFlatBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentFlatChooseBinding.bind(view)
+        binding = FragmentJoinFlatBinding.bind(view)
+        binding.joinFlatButton.setOnClickListener {
+            joinFlat()
+        }
         binding.createNewFlatButton.setOnClickListener {
             createNewFlat()
         }
@@ -22,7 +24,24 @@ class JoinFlatFragment : Fragment(R.layout.fragment_flat_choose) {
     }
 
     private fun createNewFlat() {
-        Log.v("ahoj", "pepo")
-        Toast.makeText(context, "AHAAA", Toast.LENGTH_LONG).show()
+        val dialogContentView = View.inflate(context, R.layout.dialog_create_flat, null)
+        val editText = dialogContentView.findViewById<EditText>(R.id.editText)
+        editText.inputType = InputType.TYPE_CLASS_TEXT
+
+
+        var flatName: String
+        android.app.AlertDialog.Builder(context)
+            .setView(dialogContentView)
+            .setPositiveButton(R.string.create) { _, _ ->
+                // Accepted, now it has to be to be created
+                flatName = editText.text.toString()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun joinFlat() {
+        // TODO
+        Toast.makeText(context, "Joining Flat", Toast.LENGTH_SHORT).show()
     }
 }
