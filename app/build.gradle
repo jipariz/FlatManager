@@ -24,6 +24,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs = ['-Xjvm-default=compatibility']
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -68,7 +73,12 @@ dependencies {
     implementation "com.google.firebase:firebase-database:19.2.1"
     implementation 'com.google.firebase:firebase-firestore-ktx:21.4.2'
 
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
+    implementation "androidx.core:core-ktx:1.2.0"
 
+
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //play service auth
     implementation 'com.google.android.gms:play-services-auth:17.0.0'

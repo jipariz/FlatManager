@@ -46,6 +46,9 @@ class DatabaseService(val auth: FirebaseAuth) {
     val user =
         MutableLiveData<User?>().apply { value = userInternal }
 
+    suspend fun getUserNames() : List<String>{
+        return flat.value?.usersList?.map { users.document(it).get().await().toObject<User>()?.name ?: "FlatMate" } ?: emptyList()
+    }
 
     suspend fun writeNewUser(userId: String, username: String?, email: String?) {
         val user = User(userId, username, email)
@@ -71,7 +74,7 @@ class DatabaseService(val auth: FirebaseAuth) {
 
      suspend fun assignFlatToUser(id: String){
         userId?.let {
-            users.document(it).update(mapOf(Pair("flatId", id)))
+            users.document(it).update(mapOf(Pair("flatId", id))).await()
             getFlat(id)
         }
     }

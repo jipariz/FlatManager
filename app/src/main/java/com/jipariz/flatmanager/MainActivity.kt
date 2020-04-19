@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 loadFragment(JoinFlatFragment())
                 binding.navigationView.hide()
             } else {
+                databaseService.getFlat(user?.flatId ?: "")
                 goToHomeFragment()
             }
         }
