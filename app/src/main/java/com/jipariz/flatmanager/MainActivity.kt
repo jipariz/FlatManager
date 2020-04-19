@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
 import com.jipariz.flatmanager.firebase.database.DatabaseService
@@ -28,18 +29,23 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+
+
         launch {
             val user = databaseService.getUser()
+            inicializeObservers()
             if(user?.flatId.isNullOrEmpty()){
                 title="Join flat"
                 loadFragment(JoinFlatFragment())
                 binding.navigationView.hide()
             } else {
-                title=resources.getString(R.string.home_title)
-                loadFragment(HomeFragment())
-                binding.navigationView.show()
+                goToHomeFragment()
             }
         }
+
+
 
         binding.navigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
@@ -67,6 +73,26 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
+    private fun inicializeObservers(){
+        databaseService.user.observe(this, Observer {
+            if(it == null || FirebaseAuth.getInstance().currentUser?.isAnonymous != false){
+                startActivity(LoginActivity.getLaunchIntent(applicationContext))
+                FirebaseAuth.getInstance().signOut()
+            }
+        })
+        databaseService.flat.observe(this, Observer {
+            if(it != null){
+                goToHomeFragment()
+            }
+        })
+    }
+
+    private fun goToHomeFragment(){
+        title=resources.getString(R.string.home_title)
+        loadFragment(HomeFragment())
+        binding.navigationView.show()
+    }
+
     private fun loadFragment(fragment: Fragment) {
         // load fragment
         val transaction = supportFragmentManager.beginTransaction()
@@ -77,8 +103,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onStart() {
         super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
+        if (FirebaseAuth.getInstance().currentUser?.isAnonymous != false) {
             startActivity(LoginActivity.getLaunchIntent(this))
             finish()
         }
