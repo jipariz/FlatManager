@@ -47,12 +47,15 @@ class DatabaseService(val auth: FirebaseAuth) {
         MutableLiveData<User?>().apply { value = userInternal }
 
 
-    fun writeNewUser(userId: String, username: String?, email: String?) {
+    suspend fun writeNewUser(userId: String, username: String?, email: String?) {
         val user = User(userId, username, email)
-        users.document(userId)
-            .set(user, SetOptions.merge())
-            .addOnSuccessListener { Log.d(TAG, "User successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        val snapshot = users.document(userId).get().await()
+        if(!snapshot.exists()) {
+            users.document(userId)
+                .set(user, SetOptions.merge())
+                .addOnSuccessListener { Log.d(TAG, "User successfully written!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        }
 
     }
 

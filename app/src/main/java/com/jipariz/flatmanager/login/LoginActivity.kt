@@ -18,9 +18,16 @@ import com.jipariz.flatmanager.MainActivity
 import com.jipariz.flatmanager.R
 import com.jipariz.flatmanager.databinding.ActivityLoginBinding
 import com.jipariz.flatmanager.firebase.database.DatabaseService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import kotlin.coroutines.CoroutineContext
 
-class LoginActivity: AppCompatActivity() {
+class LoginActivity: AppCompatActivity(), CoroutineScope {
+    private val job = Job()
+
     val RC_SIGN_IN: Int = 1
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
@@ -79,15 +86,18 @@ class LoginActivity: AppCompatActivity() {
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-                databaseService.writeNewUser(
-                    userId = firebaseAuth.currentUser?.uid ?: "",
-                    username = firebaseAuth.currentUser?.displayName,
-                    email = firebaseAuth.currentUser?.email
-                )
-                startActivity(MainActivity.getLaunchIntent(this))
+                launch {
+                    databaseService.writeNewUser(
+                        userId = firebaseAuth.currentUser?.uid ?: "",
+                        username = firebaseAuth.currentUser?.displayName,
+                        email = firebaseAuth.currentUser?.email
+                    )
+                    startActivity(MainActivity.getLaunchIntent(applicationContext))
+                }
             } else {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
             }
@@ -99,4 +109,7 @@ class LoginActivity: AppCompatActivity() {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 }
