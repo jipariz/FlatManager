@@ -1,11 +1,8 @@
 package com.jipariz.flatmanager.global
 
-import android.graphics.drawable.Drawable
 import android.view.View
-import androidx.annotation.IdRes
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.transition.Transition
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 
 
 fun View.show() {
@@ -14,4 +11,13 @@ fun View.show() {
 
 fun View.hide() {
     this.visibility = View.GONE
+}
+
+
+fun <A, R> LiveData<A>.map(block: (A) -> R): LiveData<R> {
+    val result = MediatorLiveData<R>()
+    result.addSource(this) {
+        result.value = block(it)
+    }
+    return result
 }

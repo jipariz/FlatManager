@@ -3,7 +3,6 @@ package com.jipariz.flatmanager
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.FragmentProfileBinding
 import com.jipariz.flatmanager.login.LoginActivity
@@ -14,6 +13,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
     private lateinit var binding: FragmentProfileBinding
 
     private val firebaseAuth: FirebaseAuth by inject()
+
+    val model: MainViewModel by inject()
 
 
 

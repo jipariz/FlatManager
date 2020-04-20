@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jipariz.flatmanager.databinding.FragmentHomeBinding
-import com.jipariz.flatmanager.firebase.database.DatabaseService
 import kotlinx.android.synthetic.main.users_recycler_item.view.*
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
@@ -18,24 +17,23 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private lateinit var adapter: UserListAdapter
 
 
+    val model: MainViewModel by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val databaseService : DatabaseService = get()
+        model.liveState.observe(viewLifecycleOwner, Observer { renderState(it) })
 
         binding = FragmentHomeBinding.bind(view)
         linearLayoutManager = LinearLayoutManager(context)
+    }
+
+    private fun renderState(it: PageState?) {
         binding.userList.layoutManager = linearLayoutManager
-        binding.flatName.text = databaseService.flat.value?.name
-        binding.flatCode.text = databaseService.flat.value?.flatId
-
-        launch {
-            val userList = databaseService.getUserNames()
-            adapter = UserListAdapter(userList)
-            binding.userList.adapter = adapter
-
-        }
+        binding.flatName.text = it?.flat?.name
+        binding.flatCode.text = it?.flat?.flatId
+        adapter = UserListAdapter(it?.flatmates)
+        binding.userList.adapter = adapter
     }
 
 }

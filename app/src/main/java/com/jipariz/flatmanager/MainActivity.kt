@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
-import com.jipariz.flatmanager.firebase.database.DatabaseService
 import com.jipariz.flatmanager.global.hide
 import com.jipariz.flatmanager.global.show
 import com.jipariz.flatmanager.login.LoginActivity
@@ -20,50 +19,34 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivityMainBinding
     private val job = Job()
 
-    private val databaseService: DatabaseService by inject()
-
+    val model: MainViewModel by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        model.liveState.observe(this, Observer { renderState(it) })
+        model.getData()
 
-
-
-
-
-        launch {
-            val user = databaseService.getUser()
-            inicializeObservers()
-            if(user?.flatId.isNullOrEmpty()){
-                title="Join flat"
-                loadFragment(JoinFlatFragment())
-                binding.navigationView.hide()
-            } else {
-                databaseService.getFlat(user?.flatId ?: "")
-                goToHomeFragment()
-            }
-        }
-
-
+        model.liveState.observe(this, Observer { renderState(it) })
 
         binding.navigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home-> {
-                    title=resources.getString(R.string.home_title)
+            when (it.itemId) {
+                R.id.navigation_home -> {
+                    title = resources.getString(R.string.home_title)
                     loadFragment(HomeFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_assignment-> {
-                    title=resources.getString(R.string.assignment_title)
+                R.id.navigation_assignment -> {
+                    title = resources.getString(R.string.assignment_title)
                     loadFragment(AssignmentFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.navigation_profile-> {
-                    title=resources.getString(R.string.profile_title)
+                R.id.navigation_profile -> {
+                    title = resources.getString(R.string.profile_title)
                     loadFragment(ProfileFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
@@ -74,22 +57,23 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    private fun inicializeObservers(){
-        databaseService.user.observe(this, Observer {
-            if(it == null || FirebaseAuth.getInstance().currentUser?.isAnonymous != false){
-                startActivity(LoginActivity.getLaunchIntent(applicationContext))
-                FirebaseAuth.getInstance().signOut()
+    private fun renderState(it: PageState?) {
+        when{
+            it?.flat == null -> {
+                title = "Join flat"
+                loadFragment(JoinFlatFragment())
+                binding.navigationView.hide()
             }
-        })
-        databaseService.flat.observe(this, Observer {
-            if(it != null){
+            else -> {
                 goToHomeFragment()
             }
-        })
+        }
+
+
     }
 
-    private fun goToHomeFragment(){
-        title=resources.getString(R.string.home_title)
+    private fun goToHomeFragment() {
+        title = resources.getString(R.string.home_title)
         loadFragment(HomeFragment())
         binding.navigationView.show()
     }
