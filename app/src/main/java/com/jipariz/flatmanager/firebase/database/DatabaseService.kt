@@ -34,7 +34,7 @@ class DatabaseService(val auth: FirebaseAuth) {
 
     suspend fun writeFlat(name:String){
         userId?.let {
-            val data = Flat(name, listOf(it))
+            val data = Flat(name, listOf(mapOf(Pair("userId", it), Pair("userName", auth.currentUser?.displayName ?: ""))))
             flats.document(data.flatId).set(data, SetOptions.merge()).await()
             assignFlatToUser(data.flatId)
 

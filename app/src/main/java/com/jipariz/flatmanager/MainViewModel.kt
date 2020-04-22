@@ -1,5 +1,6 @@
 package com.jipariz.flatmanager
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,60 @@ import java.lang.Exception
 class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
 
     fun getData() {
-        fetchUser()
+        //fetchUser()
+        userListener()
+    }
+
+    fun userListener() {
+        userId?.let {
+            val docRef = databaseService.users.document(it)
+            docRef.addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d("", "Current data: ${snapshot.data}")
+                    val user = snapshot.toObject<User?>()
+                    state = state.copy(
+                        user = user
+                    )
+                    user?.flatId?.let { flatId ->
+                        flatListener(flatId)
+                    }
+                } else {
+                    Log.d("", "Current data: null")
+                }
+            }
+        }
+    }
+
+    fun flatListener(id: String) {
+        try {
+            state.user?.flatId?.let {
+                val dockRef = databaseService.flats.document(it)
+                dockRef.addSnapshotListener { snapshot, e ->
+
+                    if (e != null) {
+                        Log.w("", "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        Log.d("", "Current data: ${snapshot.data}")
+                        val flat = snapshot.toObject<Flat?>()
+                        state = state.copy(
+                            flat = flat
+                        )
+                    } else {
+                        Log.d("", "Current data: null")
+                    }
+
+                }
+            }
+        } catch (e: Exception) {
+        }
     }
 
 
@@ -33,54 +87,9 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
         get() = FirebaseAuth.getInstance().currentUser?.uid
 
 
-    fun fetchUser() {
-        try {
-            userId?.let {
-                databaseService.users.document(it).get().addOnSuccessListener { snapshot ->
-                    val user = snapshot.toObject<User?>()
-                    state = state.copy(
-                        user = user
-                    )
-                    fetchFlat()
-                }
-            }
-
-        } catch (e: Exception) {
-        }
-    }
-
-    fun fetchFlat() {
-        try {
-            state.user?.flatId?.let {
-                databaseService.flats.document(it).get().addOnSuccessListener { snapshot ->
-                    val flat = snapshot.toObject<Flat?>()
-                    state = state.copy(
-                        flat = flat
-                    )
-                    viewModelScope.launch {
-                        fetchFlatmatesNames()
-                    }
-
-                }
-            }
-        } catch (e: Exception) {
-        }
-    }
-
-    suspend fun fetchFlatmatesNames() {
-        val flatmatesList = state.flat?.usersList?.map {
-            databaseService.users.document(it).get().await().toObject<User>()?.name ?: "FlatMate"
-        } ?: emptyList()
-        state = state.copy(
-            flatmates = flatmatesList
-        )
-
-    }
-
     fun createNewFlat(name: String) {
         viewModelScope.launch {
             databaseService.writeFlat(name)
-            fetchUser()
         }
 
     }
@@ -89,6 +98,5 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
 data class PageState(
     val user: User? = null,
     val flat: Flat? = null,
-    val loading: Boolean? = false,
-    val flatmates: List<String>? = null
+    val loading: Boolean? = false
 )

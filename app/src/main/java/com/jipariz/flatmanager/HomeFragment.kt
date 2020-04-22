@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         binding.userList.layoutManager = linearLayoutManager
         binding.flatName.text = it?.flat?.name
         binding.flatCode.text = it?.flat?.flatId
-        adapter = UserListAdapter(it?.flatmates)
+        adapter = UserListAdapter(it?.flat?.usersList?.map { it["userName"] ?: ""})
         binding.userList.adapter = adapter
     }
 
