@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jipariz.flatmanager.databinding.FragmentHomeBinding
-import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.users_recycler_item.view.*
 import org.koin.android.ext.android.inject
 
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 class UserListAdapter(private val itemList: List<String>?) :
     RecyclerView.Adapter<ListItemHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.users_recycler_item_next, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.users_recycler_item, parent, false)
 
         return ListItemHolder(itemView)
     }

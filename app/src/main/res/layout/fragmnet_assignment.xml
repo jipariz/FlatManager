@@ -8,5 +8,5 @@
         android:id="@+id/assignment_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/users_recycler_item_next" />
+        tools:listitem="@layout/assignment_recycler_item_next" />
 </androidx.constraintlayout.widget.ConstraintLayout>

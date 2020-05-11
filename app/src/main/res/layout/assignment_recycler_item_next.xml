@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:padding="8dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
 
     <View
         android:id="@+id/vertical_line"
         android:layout_width="3sp"
-        android:layout_height="0dp"
+        android:layout_height="32sp"
         android:background="@drawable/vertical_line"
-        app:layout_constraintBottom_toBottomOf="@+id/week_view"
+        app:layout_constraintBottom_toTopOf="@id/cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,11 +22,12 @@
         android:id="@+id/week_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/vertical_line"
         android:layout_marginStart="10sp"
         android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/vertical_line"
+        app:layout_constraintStart_toEndOf="@+id/vertical_line"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Next week" />
 
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/week_view">
+        app:layout_constraintTop_toBottomOf="@id/vertical_line">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/assignmentItemLayout"
@@ -54,7 +55,7 @@
                 android:foregroundGravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_profile" />
+                android:src="@drawable/ic_profile"/>
 
 
             <TextView
