@@ -1,6 +1,5 @@
-package com.jipariz.flatmanager.Assigment
+package com.jipariz.flatmanager.assigment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jipariz.flatmanager.R
 import com.jipariz.flatmanager.firebase.database.User
 
-class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
+class UserAdapter(private val users: List<String>) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
 
     class UserHolder(v: View) : RecyclerView.ViewHolder(v) {
     }
 
     override fun getItemViewType(position: Int): Int {
         // To differ first and others items in recycler
-        return if (position == 0) 0 else 1
+        return position
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserHolder {
@@ -26,7 +25,9 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
 
         view = when(viewType) {
             0 -> inflater.inflate(R.layout.assignment_recycler_item_first, parent, false)
-            else -> inflater.inflate(R.layout.assignment_recycler_item_next, parent, false)
+            1 -> inflater.inflate(R.layout.assignment_recycler_item_next, parent, false)
+            else -> inflater.inflate(R.layout.assignment_recycler_item, parent, false)
+
         }
         return UserHolder(view)
     }
@@ -36,11 +37,14 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        holder.itemView.findViewById<TextView>(R.id.week_view).text = when(position) {
-            0 -> "This week turn"
-            1 -> "Next week"
-            else -> "$position. Week"
+        when(position) {
+            0 -> {
+                holder.itemView.findViewById<TextView>(R.id.week_view).text = "This week turn"
+            }
+            1 -> {
+                holder.itemView.findViewById<TextView>(R.id.week_view).text = "Next week"
+            }
         }
-        holder.itemView.findViewById<TextView>(R.id.user_name).text = users[position].name
+        holder.itemView.findViewById<TextView>(R.id.user_name).text = users[position]
     }
 }

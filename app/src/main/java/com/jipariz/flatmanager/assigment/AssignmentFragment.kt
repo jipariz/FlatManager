@@ -1,4 +1,4 @@
-package com.jipariz.flatmanager.Assigment
+package com.jipariz.flatmanager.assigment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,14 +19,6 @@ class AssignmentFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private val dummyUsers = listOf<User>(
-        User(null, "Pepa", null),
-        User(null, "Filip", null),
-        User(null, "Serzant Stistko", null),
-        User(null, "Genius", null),
-        User(null, "Vitas", null),
-        User(null, "Tester", null)
-    )
 
 
     override fun onCreateView(
@@ -40,7 +32,10 @@ class AssignmentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewManager = LinearLayoutManager(view.context)
-        viewAdapter = UserAdapter(dummyUsers)
+        model.liveState.value?.flat?.usersList?.map { it["userName"] ?: "" }?.let {
+            viewAdapter = UserAdapter(it)
+
+        }
         recyclerView = view.findViewById<RecyclerView>(R.id.assignment_recycler).apply {
             setHasFixedSize(true)
             layoutManager = viewManager

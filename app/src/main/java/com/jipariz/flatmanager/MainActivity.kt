@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
-import com.jipariz.flatmanager.Assigment.AssignmentFragment
+import com.jipariz.flatmanager.assigment.AssignmentFragment
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
 import com.jipariz.flatmanager.global.hide
 import com.jipariz.flatmanager.global.show
