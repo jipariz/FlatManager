@@ -25,7 +25,7 @@ class JoinFlatFragment : Fragment(R.layout.fragment_join_flat), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentJoinFlatBinding.bind(view)
         binding.joinFlatButton.setOnClickListener {
-            joinFlat()
+            joinFlat(binding.flatCodeEditText.text.toString())
         }
         binding.createNewFlatButton.setOnClickListener {
             createNewFlat()
@@ -47,9 +47,8 @@ class JoinFlatFragment : Fragment(R.layout.fragment_join_flat), CoroutineScope {
             .show()
     }
 
-    private fun joinFlat() {
-        // TODO
-        Toast.makeText(context, "Joining Flat", Toast.LENGTH_SHORT).show()
+    private fun joinFlat(flatId: String) {
+        model.joinFlat(flatId)
     }
 
     override val coroutineContext: CoroutineContext

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_join">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.jipariz.flatmanager.HomeFragment"
+        android:label="First Fragment"
+        tools:layout="@layout/fragment_home" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_assignment"
+        android:name="com.jipariz.flatmanager.AssignmentFragment"
+        android:label="Second Fragment"
+        tools:layout="@layout/fragment_assignment" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.jipariz.flatmanager.ProfileFragment"
+        android:label="Third Fragment"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_join"
+        android:name="com.jipariz.flatmanager.JoinFlatFragment"
+        android:label="Join"
+        tools:layout="@layout/fragment_join_flat"/>
+</navigation>

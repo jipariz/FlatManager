@@ -23,6 +23,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.gms.common.SignInButton
+        android:background="@drawable/button_style"
         android:id="@+id/google_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

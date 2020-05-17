@@ -6,15 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.toObject
 import com.jipariz.flatmanager.firebase.database.DatabaseService
 import com.jipariz.flatmanager.firebase.database.Flat
 import com.jipariz.flatmanager.firebase.database.User
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
+
+    var flatRef: ListenerRegistration? = null
 
     fun getData() {
         //fetchUser()
@@ -49,8 +52,7 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
     fun flatListener(id: String) {
         try {
             state.user?.flatId?.let {
-                val dockRef = databaseService.flats.document(it)
-                dockRef.addSnapshotListener { snapshot, e ->
+                flatRef = databaseService.flats.document(it).addSnapshotListener { snapshot, e ->
 
                     if (e != null) {
                         Log.w("", "Listen failed.", e)
@@ -92,6 +94,25 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
             databaseService.writeFlat(name)
         }
 
+    }
+
+    fun joinFlat(flatId: String) {
+        viewModelScope.launch {
+            databaseService.assignFlatToUser(flatId)
+        }
+    }
+
+    fun removeFlat(){
+        viewModelScope.launch {
+            state.user?.userId?.let { state.user?.flatId?.let { it1 ->
+                databaseService.removeFlatFromUser(it,
+                    it1
+                )
+            } }
+            flatRef?.remove()
+            flatRef = null
+            state = state.copy(flat = null)
+        }
     }
 }
 

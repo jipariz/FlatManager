@@ -10,4 +10,5 @@
     <string name="home_title">Home</string>
     <string name="name_of_flat">Name of flat:</string>
     <string name="create">Create</string>
+    <string name="leave_flat_button_title">Leave flat</string>
 </resources>

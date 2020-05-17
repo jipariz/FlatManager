@@ -7,15 +7,21 @@
     tools:context=".JoinFlatFragment">
 
     <Button
+        android:background="@drawable/button_style"
         android:id="@+id/join_flat_button"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/join_flat"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/text"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@+id/create_new_flat_button"
         app:layout_constraintStart_toStartOf="@+id/create_new_flat_button" />
 
     <Button
+        android:background="@drawable/button_style"
         android:id="@+id/create_new_flat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,25 +29,44 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:text="@string/create_new_flat"
+        android:paddingHorizontal="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/text"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
+        android:backgroundTint="@color/divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <EditText
-        android:id="@+id/editText2"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        app:layout_constraintTop_toBottomOf="@id/join_flat_button"
+        app:layout_constraintBottom_toTopOf="@id/create_new_flat_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="or"/>
+
+    <EditText
+        android:id="@+id/flat_code_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
         android:hint="@string/flat_code"
-        android:autofillHints="000000"
-        android:inputType="number"
+        android:textAllCaps="true"
+        android:textColor="@color/secondary_text"
+        android:inputType="textVisiblePassword"
+        android:textColorHint="@color/primary_text"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/join_flat_button"
         app:layout_constraintEnd_toEndOf="parent"
