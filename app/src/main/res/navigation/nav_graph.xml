@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_assignment"
-        android:name="com.jipariz.flatmanager.AssignmentFragment"
+        android:name="com.jipariz.flatmanager.assigment.AssignmentFragment"
         android:label="Second Fragment"
         tools:layout="@layout/fragment_assignment">
 <!--        <action-->

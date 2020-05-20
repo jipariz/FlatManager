@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10sp"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/primary_dark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/vertical_line"
         app:layout_constraintStart_toEndOf="@+id/vertical_line"
