@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:paddingTop="8dp"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:gravity="center_horizontal"/>
 
 </LinearLayout>

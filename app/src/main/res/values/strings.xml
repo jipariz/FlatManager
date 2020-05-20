@@ -11,4 +11,7 @@
     <string name="name_of_flat">Name of flat:</string>
     <string name="create">Create</string>
     <string name="leave_flat_button_title">Leave flat</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="this_week_turn">This week turn</string>
+    <string name="finish_clean">Finish clean</string>
 </resources>
