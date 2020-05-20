@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.jipariz.flatmanager.databinding.ActivityMainBinding
 import com.jipariz.flatmanager.global.hide
@@ -38,13 +39,16 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         model.liveState.observe(this, Observer { renderState(it) })
 
         navController = findNavController(R.id.nav_host_fragment)
+        setupActionBarWithNavController(navController)
         supportActionBar?.hide()
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.bottom_menu,menu)
         binding.navigationView.setupWithNavController(menu!!,navController)
+
         return true
     }
 
@@ -56,14 +60,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private fun renderState(it: PageState?) {
         when {
             it?.flat == null -> {
-                navController.navigate(R.id.navigation_join,null)
-//                navController.navigate(R.id.navigation_join,null, NavOptions.Builder().setEnterAnim(R.anim.enter_from_left).setExitAnim(R.anim.exit_to_left).build())
+                navController.navigate(R.id.nav_join,null)
+                //navController.navigate(R.id.nav_join,null, NavOptions.Builder().setEnterAnim(R.anim.enter_from_left).setExitAnim(R.anim.exit_to_left).build())
 
                 //loadFragment(JoinFlatFragment())
                 binding.navigationView.hide()
             }
             else -> {
-                navController.navigate(R.id.navigation_home,null)
+                navController.navigate(R.id.nav_home,null)
 
                 binding.navigationView.show()
             }
