@@ -69,7 +69,8 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
                         Log.d("", "Current data: ${snapshot.data}")
                         val flat = snapshot.toObject<Flat?>()
                         state = state.copy(
-                            flat = flat
+                            flat = flat,
+                            loading = false
                         )
                     } else {
                         Log.d("", "Current data: null")
@@ -104,6 +105,9 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
     }
     val pendingVisibility = liveState.map {
         mapVisible(it.flat?.weekCleanFinished == false && it.flat.usersList?.get(0)?.get("userId") != userId)
+    }
+    val progressVisibility = liveState.map {
+        mapVisible(it.loading == true)
     }
 
 

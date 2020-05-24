@@ -64,6 +64,7 @@ class LoginActivity: AppCompatActivity(), CoroutineScope {
     private fun setupUI() {
         binding.googleButton.setOnClickListener {
             signIn()
+            binding.progress.visibility = View.VISIBLE
         }
     }
 
@@ -81,6 +82,7 @@ class LoginActivity: AppCompatActivity(), CoroutineScope {
                 account?.let { firebaseAuthWithGoogle(it) }
             } catch (e: ApiException) {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+                binding.progress.visibility = View.GONE
             }
         }
     }
@@ -102,6 +104,7 @@ class LoginActivity: AppCompatActivity(), CoroutineScope {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
             }
         }
+        binding.progress.visibility = View.GONE
     }
 
     companion object {

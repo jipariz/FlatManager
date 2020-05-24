@@ -14,6 +14,7 @@ import com.jipariz.flatmanager.databinding.ActivityMainBinding
 import com.jipariz.flatmanager.global.hide
 import com.jipariz.flatmanager.global.show
 import com.jipariz.flatmanager.login.LoginActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
@@ -40,6 +41,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)
         supportActionBar?.hide()
+        model.progressVisibility.observe(this, Observer {
+            progress.visibility = it
+        })
 
     }
 
@@ -60,9 +64,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         when {
             it?.flat == null -> {
                 navController.navigate(R.id.nav_join,null)
-                //navController.navigate(R.id.nav_join,null, NavOptions.Builder().setEnterAnim(R.anim.enter_from_left).setExitAnim(R.anim.exit_to_left).build())
 
-                //loadFragment(JoinFlatFragment())
                 binding.navigationView.hide()
             }
             else -> {

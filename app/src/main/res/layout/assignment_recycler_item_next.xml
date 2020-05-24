@@ -68,6 +68,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/primary_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_picture"
