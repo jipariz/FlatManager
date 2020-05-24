@@ -3,11 +3,15 @@
     <string name="house_logo">House logo</string>
     <string name="house_logo_contribution">Designed by Freepik</string>
     <string name="flat_code">flat code</string>
-    <string name="join_flat">Join flat</string>
+    <string name="join_flat">Enter the Flat Code</string>
     <string name="create_new_flat">Create new flat</string>
     <string name="profile_title">Profile</string>
     <string name="assignment_title">Assignments</string>
     <string name="home_title">Home</string>
-    <string name="name_of_flat">Name of flat:</string>
+    <string name="name_of_flat">Name your flat</string>
     <string name="create">Create</string>
+    <string name="leave_flat_button_title">Leave flat</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="this_week_turn">This week turn</string>
+    <string name="finish_clean">Clean</string>
 </resources>

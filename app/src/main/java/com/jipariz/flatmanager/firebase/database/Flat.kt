@@ -4,6 +4,8 @@ class Flat {
     val flatId: String = List(4) { alphabet.random() }.joinToString("")
     var name: String? = null
     var usersList: List<Map<String, String>>? = null
+    var weekCleanFinished: Boolean = false
+
 
     constructor() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)

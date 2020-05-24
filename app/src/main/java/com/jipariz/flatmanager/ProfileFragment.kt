@@ -31,6 +31,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
             .centerCrop()
             .into(binding.profilePicture)
         binding.profileName.text = firebaseAuth.currentUser?.displayName
+        binding.email.text = firebaseAuth.currentUser?.email
 
     }
     private fun signOut() {

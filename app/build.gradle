@@ -51,6 +51,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
     implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
@@ -68,20 +69,29 @@ dependencies {
 
 
     //firebase
-    implementation "com.google.firebase:firebase-core:17.2.3"
-    implementation "com.google.firebase:firebase-auth:19.2.0"
-    implementation "com.google.firebase:firebase-database:19.2.1"
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.2'
+    implementation "com.google.firebase:firebase-core:17.4.1"
+    implementation "com.google.firebase:firebase-auth:19.3.1"
+    implementation "com.google.firebase:firebase-database:19.3.0"
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
 
-    implementation "androidx.fragment:fragment-ktx:1.2.4"
-    implementation "androidx.core:core-ktx:1.2.0"
 
+    implementation 'com.github.po10cio:TimeLineView:1.0.2'
+
+    implementation 'cz.kinst.jakub:android-stateful-layout-base:2.0.7'
 
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //play service auth
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.5'
+
+    implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
+
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 
     //koin
     implementation "org.koin:koin-core:$koin_version"

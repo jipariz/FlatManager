@@ -1,25 +1,33 @@
 package com.jipariz.flatmanager
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.toObject
 import com.jipariz.flatmanager.firebase.database.DatabaseService
 import com.jipariz.flatmanager.firebase.database.Flat
 import com.jipariz.flatmanager.firebase.database.User
+import com.jipariz.flatmanager.global.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
+
+    var flatRef: ListenerRegistration? = null
+    var flatDocReference: DocumentReference? = null
 
     fun getData() {
         //fetchUser()
         userListener()
     }
+
+
 
     fun userListener() {
         userId?.let {
@@ -49,8 +57,8 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
     fun flatListener(id: String) {
         try {
             state.user?.flatId?.let {
-                val dockRef = databaseService.flats.document(it)
-                dockRef.addSnapshotListener { snapshot, e ->
+                flatDocReference = databaseService.flats.document(it)
+                    flatRef = flatDocReference?.addSnapshotListener { snapshot, e ->
 
                     if (e != null) {
                         Log.w("", "Listen failed.", e)
@@ -61,7 +69,8 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
                         Log.d("", "Current data: ${snapshot.data}")
                         val flat = snapshot.toObject<Flat?>()
                         state = state.copy(
-                            flat = flat
+                            flat = flat,
+                            loading = false
                         )
                     } else {
                         Log.d("", "Current data: null")
@@ -87,10 +96,49 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
         get() = FirebaseAuth.getInstance().currentUser?.uid
 
 
+    private fun mapVisible(visible: Boolean) = if (visible) View.VISIBLE else View.GONE
+    val buttonVisibility = liveState.map {
+        mapVisible(it.flat?.weekCleanFinished == false && it.flat.usersList?.get(0)?.get("userId") == userId)
+    }
+    val finishedVisibility = liveState.map {
+        mapVisible(it.flat?.weekCleanFinished == true)
+    }
+    val pendingVisibility = liveState.map {
+        mapVisible(it.flat?.weekCleanFinished == false && it.flat.usersList?.get(0)?.get("userId") != userId)
+    }
+    val progressVisibility = liveState.map {
+        mapVisible(it.loading == true)
+    }
+
+
     fun createNewFlat(name: String) {
         viewModelScope.launch {
             databaseService.writeFlat(name)
         }
+
+    }
+
+    fun joinFlat(flatId: String) {
+        viewModelScope.launch {
+            databaseService.assignFlatToUser(flatId)
+        }
+    }
+
+    fun removeFlat(){
+        viewModelScope.launch {
+            state.user?.userId?.let { state.user?.flatId?.let { it1 ->
+                databaseService.removeFlatFromUser(it,
+                    it1
+                )
+            } }
+            flatRef?.remove()
+            flatRef = null
+            state = state.copy(flat = null)
+        }
+    }
+
+    fun clean(){
+        flatDocReference?.update("weekCleanFinished", true)
 
     }
 }

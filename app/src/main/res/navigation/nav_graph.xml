@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.jipariz.flatmanager.HomeFragment"
+        android:label="First Fragment"
+        tools:layout="@layout/fragment_home">
+<!--        <action-->
+<!--            android:id="@+id/action_homeFragment_to_assignmentFragment"-->
+<!--            app:destination="@id/navigation_assignment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_homeFragment_to_profileFragment"-->
+<!--            app:destination="@id/navigation_profile"/>-->
+    </fragment>
+    <fragment
+        android:id="@+id/nav_assignment"
+        android:name="com.jipariz.flatmanager.assigment.AssignmentFragment"
+        android:label="Second Fragment"
+        tools:layout="@layout/fragment_assignment">
+<!--        <action-->
+<!--            android:id="@+id/action_assignmentFragment_to_profileFragment"-->
+<!--            app:destination="@id/navigation_profile" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_assignmentFragment_to_homeFragment"-->
+<!--            app:destination="@id/navigation_home"-->
+<!--            app:popUpToInclusive="false" />-->
+    </fragment>
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.jipariz.flatmanager.ProfileFragment"
+        android:label="Third Fragment"
+        tools:layout="@layout/fragment_profile">
+<!--        <action-->
+<!--            android:id="@+id/action_profileFragment_to_assignmentFragment"-->
+<!--            app:destination="@id/navigation_assignment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_profileFragment_to_homeFragment"-->
+<!--            app:destination="@id/navigation_home"-->
+<!--            app:popUpToInclusive="false" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_join"
+        android:name="com.jipariz.flatmanager.JoinFlatFragment"
+        android:label="Join"
+        tools:layout="@layout/fragment_join_flat">
+    </fragment>
+</navigation>
