@@ -75,10 +75,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
 
 
-    implementation 'com.github.po10cio:TimeLineView:1.0.2'
-
-    implementation 'cz.kinst.jakub:android-stateful-layout-base:2.0.7'
-
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 

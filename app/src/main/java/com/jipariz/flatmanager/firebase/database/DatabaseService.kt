@@ -1,12 +1,16 @@
 package com.jipariz.flatmanager.firebase.database
 
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -31,7 +35,7 @@ class DatabaseService(val auth: FirebaseAuth) {
                 .addOnSuccessListener { Log.d(TAG, "User successfully written!") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
         }
-
+        getToken()
     }
 
     suspend fun writeFlat(name: String) {
@@ -50,6 +54,20 @@ class DatabaseService(val auth: FirebaseAuth) {
 
         }
 
+    }
+
+    private fun getToken(){
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+
+                userId?.let {
+                    users.document(it).update(mapOf(Pair("token", task.result?.token)))
+                }
+
+            })
     }
 
     suspend fun assignFlatToUser(id: String) {
