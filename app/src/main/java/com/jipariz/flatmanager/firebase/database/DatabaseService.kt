@@ -62,6 +62,8 @@ class DatabaseService(val auth: FirebaseAuth) {
         }
     }
 
+
+
     //    fun updateFlat(){
 //        flatInternal = user.value?.flatId?.let { flats.document(it).get().result?.toObject<Flat>() }
 //    }

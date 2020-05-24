@@ -1,6 +1,7 @@
 package com.jipariz.flatmanager
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,17 +13,21 @@ import com.google.firebase.firestore.ktx.toObject
 import com.jipariz.flatmanager.firebase.database.DatabaseService
 import com.jipariz.flatmanager.firebase.database.Flat
 import com.jipariz.flatmanager.firebase.database.User
+import com.jipariz.flatmanager.global.map
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
 
     var flatRef: ListenerRegistration? = null
+    var flatDocReference: DocumentReference? = null
 
     fun getData() {
         //fetchUser()
         userListener()
     }
+
+
 
     fun userListener() {
         userId?.let {
@@ -52,7 +57,8 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
     fun flatListener(id: String) {
         try {
             state.user?.flatId?.let {
-                flatRef = databaseService.flats.document(it).addSnapshotListener { snapshot, e ->
+                flatDocReference = databaseService.flats.document(it)
+                    flatRef = flatDocReference?.addSnapshotListener { snapshot, e ->
 
                     if (e != null) {
                         Log.w("", "Listen failed.", e)
@@ -89,6 +95,15 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
         get() = FirebaseAuth.getInstance().currentUser?.uid
 
 
+    private fun mapVisible(visible: Boolean) = if (visible) View.VISIBLE else View.GONE
+    val buttonVisibility = liveState.map {
+        mapVisible(it.flat?.weekCleanFinished == false)
+    }
+    val finishedVisibility = liveState.map {
+        mapVisible(it.flat?.weekCleanFinished == true)
+    }
+
+
     fun createNewFlat(name: String) {
         viewModelScope.launch {
             databaseService.writeFlat(name)
@@ -113,6 +128,11 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
             flatRef = null
             state = state.copy(flat = null)
         }
+    }
+
+    fun clean(){
+        flatDocReference?.update("weekCleanFinished", true)
+
     }
 }
 
