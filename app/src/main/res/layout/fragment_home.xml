@@ -12,23 +12,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/code"
         android:textSize="40sp"
         android:textStyle="bold"
         android:paddingTop="16dp"
         tools:text="ABCD"
         />
 
-    <TextView
-        android:id="@+id/code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/flat_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/flat_code"
-        android:paddingTop="16dp"
-        android:text="Invitation code:"/>
 
     <TextView
         android:id="@+id/flat_code"
@@ -36,39 +25,34 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf ="@id/code"
+        app:layout_constraintTop_toBottomOf ="@id/flat_name"
+        app:layout_constraintBottom_toTopOf="@id/flat_qr_code"
+
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/accent" />
 
+    <ImageView
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/flat_code"
+        app:layout_constraintTop_toTopOf="@id/flat_code"
+        app:layout_constraintBottom_toBottomOf="@id/flat_code"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_share_black_24dp"
+        />
 
     <ImageView
-        android:background="@drawable/background_white"
         android:id="@+id/flat_qr_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf ="@id/flat_code"
+        app:layout_constraintBottom_toTopOf="@id/leave_flat_button"
         android:layout_marginTop="16dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/user_list"
-        android:textStyle="bold"
-        android:text="Flatmates:"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/leave_flat_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="8dp"/>
 
     <Button
         android:id="@+id/leave_flat_button"

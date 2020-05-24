@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 binding.navigationView.hide()
             }
             else -> {
-                navController.navigate(R.id.nav_home,null)
+                if(navController.currentDestination?.id == R.id.nav_join) navController.navigate(R.id.nav_home,null)
 
                 binding.navigationView.show()
             }

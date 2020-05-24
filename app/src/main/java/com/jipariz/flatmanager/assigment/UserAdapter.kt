@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -66,7 +67,11 @@ class UserAdapter(
                 })
 
                 model.finishedVisibility.observe(lifecycleOwner, Observer {
-                    view.findViewById<TextView>(R.id.text_clean).visibility = it
+                    view.findViewById<ImageView>(R.id.clean_done).visibility = it
+                })
+
+                model.pendingVisibility.observe(lifecycleOwner, Observer {
+                    view.findViewById<ImageView>(R.id.clean_pending).visibility = it
                 })
 
 

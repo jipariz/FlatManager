@@ -97,10 +97,13 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
 
     private fun mapVisible(visible: Boolean) = if (visible) View.VISIBLE else View.GONE
     val buttonVisibility = liveState.map {
-        mapVisible(it.flat?.weekCleanFinished == false)
+        mapVisible(it.flat?.weekCleanFinished == false && it.flat.usersList?.get(0)?.get("userId") == userId)
     }
     val finishedVisibility = liveState.map {
         mapVisible(it.flat?.weekCleanFinished == true)
+    }
+    val pendingVisibility = liveState.map {
+        mapVisible(it.flat?.weekCleanFinished == false && it.flat.usersList?.get(0)?.get("userId") != userId)
     }
 
 

@@ -9,6 +9,10 @@
     <color name="text">#FFFFFF</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="background">#FFFFFF</color>
+    <color name="green_done">#09EC13</color>
+
+
 
     <color name="colorAccent">#03DAC5</color>
 </resources>

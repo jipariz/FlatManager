@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jipariz.flatmanager.MainViewModel
 import com.jipariz.flatmanager.PageState
 import com.jipariz.flatmanager.R
-import com.jipariz.flatmanager.UserListAdapter
 import com.jipariz.flatmanager.databinding.AssignmentRecyclerItemFirstBinding
 import com.jipariz.flatmanager.databinding.FragmentAssignmentBinding
 import kotlinx.android.synthetic.main.assignment_recycler_item_first.*
@@ -66,16 +65,7 @@ class AssignmentFragment : Fragment(R.layout.fragment_assignment), UserAdapter.o
         viewAdapter = UserAdapter(it?.flat?.usersList?.map { it["userName"] ?: ""}?: emptyList(), model, this, this)
         binding.assignmentRecycler.adapter = viewAdapter
 
-        if(it?.flat?.weekCleanFinished == false) {
-            clean_button?.visibility = View.VISIBLE
-            text_clean?.visibility = View.GONE
 
-
-        } else {
-            text_clean?.visibility = View.VISIBLE
-            clean_button?.visibility = View.GONE
-
-        }
     }
 
     override fun onItemClick(position: Int) {
