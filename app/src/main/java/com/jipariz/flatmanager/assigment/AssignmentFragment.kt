@@ -3,7 +3,6 @@ package com.jipariz.flatmanager.assigment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,15 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jipariz.flatmanager.MainViewModel
 import com.jipariz.flatmanager.PageState
 import com.jipariz.flatmanager.R
-import com.jipariz.flatmanager.databinding.AssignmentRecyclerItemFirstBinding
 import com.jipariz.flatmanager.databinding.FragmentAssignmentBinding
-import kotlinx.android.synthetic.main.assignment_recycler_item_first.*
 import org.koin.android.ext.android.inject
 
 
-class AssignmentFragment : Fragment(R.layout.fragment_assignment), UserAdapter.onItemClicListener {
+class AssignmentFragment : Fragment(R.layout.fragment_assignment), UserAdapter.OnItemClickListener {
 
-    val model: MainViewModel by inject()
+    private val model: MainViewModel by inject()
 
     private lateinit var binding: FragmentAssignmentBinding
 
@@ -28,13 +25,12 @@ class AssignmentFragment : Fragment(R.layout.fragment_assignment), UserAdapter.o
     private lateinit var viewManager: RecyclerView.LayoutManager
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAssignmentBinding.bind(view)
         viewManager = LinearLayoutManager(view.context)
-        model.liveState.value?.flat?.usersList?.map { it["userName"] ?: "" }?.let {
+        model.liveState.value?.flat?.usersList?.let {
             viewAdapter = UserAdapter(it, model, this, this)
 
         }
@@ -54,15 +50,11 @@ class AssignmentFragment : Fragment(R.layout.fragment_assignment), UserAdapter.o
         })
 
 
-
-
-
-
     }
 
     private fun renderState(it: PageState?) {
         binding.assignmentRecycler.layoutManager = viewManager
-        viewAdapter = UserAdapter(it?.flat?.usersList?.map { it["userName"] ?: ""}?: emptyList(), model, this, this)
+        viewAdapter = UserAdapter(it?.flat?.usersList ?: emptyList(), model, this, this)
         binding.assignmentRecycler.adapter = viewAdapter
 
 
@@ -74,7 +66,8 @@ class AssignmentFragment : Fragment(R.layout.fragment_assignment), UserAdapter.o
 
     override fun onButtonClick(position: Int) {
         model.clean()
-        Log.d("TAG", "onClick button")    }
+        Log.d("TAG", "onClick button")
+    }
 
 
 }

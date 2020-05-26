@@ -1,5 +1,6 @@
 package com.jipariz.flatmanager.assigment
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,28 +10,27 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.jipariz.flatmanager.MainViewModel
 import com.jipariz.flatmanager.R
 
 class UserAdapter(
-    private val users: List<String>,
-    val model: MainViewModel,
-    var mListener: onItemClicListener,
+    private val users: List<Map<String, String?>>,
+    private val model: MainViewModel,
+    var mListener: OnItemClickListener,
     var lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
 
 
-     interface  onItemClicListener {
-         fun onItemClick(position: Int)
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
         fun onButtonClick(position: Int)
     }
 
 
-
-    class UserHolder(v: View, val listener: onItemClicListener) : RecyclerView.ViewHolder(v){
+    class UserHolder(v: View, val listener: OnItemClickListener) : RecyclerView.ViewHolder(v) {
 
         var cleanButton: Button? = v.findViewById(R.id.clean_button)
-
 
 
         init {
@@ -38,7 +38,7 @@ class UserAdapter(
                 listener.onItemClick(adapterPosition)
             }
             cleanButton?.setOnClickListener {
-                if(adapterPosition == 0) listener.onButtonClick(adapterPosition )
+                if (adapterPosition == 0) listener.onButtonClick(adapterPosition)
             }
 
         }
@@ -57,7 +57,7 @@ class UserAdapter(
         val view: View
 
 
-        when(viewType) {
+        when (viewType) {
             0 -> {
                 view = inflater.inflate(R.layout.assignment_recycler_item_first, parent, false)
                 view.findViewById<TextView>(R.id.week_view).text = "This week turn"
@@ -87,7 +87,14 @@ class UserAdapter(
             }
 
         }
-        view.findViewById<TextView>(R.id.user_name).text = users[viewType]
+        view.findViewById<TextView>(R.id.user_name).text = users[viewType]["userName"]
+        users[viewType]["profilePic"]?.let {
+            Glide.with(view)
+                .load(Uri.parse(it.replace("s96-c/photo.jpg", "s400-c/photo.jpg")))
+                .centerCrop()
+                .placeholder(R.drawable.ic_profile)
+                .into(view.findViewById<ImageView>(R.id.profile_picture))
+        }
         return UserHolder(view, mListener)
     }
 

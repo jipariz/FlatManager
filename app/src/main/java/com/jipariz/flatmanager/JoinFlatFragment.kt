@@ -21,7 +21,7 @@ class JoinFlatFragment : Fragment(R.layout.fragment_join_flat), CoroutineScope {
 
     private lateinit var binding: FragmentJoinFlatBinding
 
-    val model: MainViewModel by inject()
+    private val model: MainViewModel by inject()
 
     override fun onActivityResult(
         requestCode: Int,
@@ -70,7 +70,6 @@ class JoinFlatFragment : Fragment(R.layout.fragment_join_flat), CoroutineScope {
             .setView(dialogContentView)
             .setPositiveButton(R.string.create) { _, _ ->
                 model.createNewFlat(dialogContentView.create_flat_dialog_edit_text.text.toString())
-
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()

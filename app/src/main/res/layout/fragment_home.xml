@@ -1,70 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/flat_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="40sp"
         android:paddingTop="16dp"
-        tools:text="ABCD"
         android:textColor="@color/primary_text"
-        />
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ABCD" />
 
 
     <TextView
         android:id="@+id/flat_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf ="@id/flat_name"
-        app:layout_constraintBottom_toTopOf="@id/flat_qr_code"
-
+        android:textColor="@color/accent"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@color/accent" />
+        app:layout_constraintBottom_toTopOf="@id/flat_qr_code"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flat_name" />
 
     <ImageView
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/flat_code"
-        app:layout_constraintTop_toTopOf="@id/flat_code"
-        app:layout_constraintBottom_toBottomOf="@id/flat_code"
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_share_black_24dp"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/flat_code"
+        app:layout_constraintStart_toEndOf="@id/flat_code"
+        app:layout_constraintTop_toTopOf="@id/flat_code" />
 
     <ImageView
         android:id="@+id/flat_qr_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf ="@id/flat_code"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/leave_flat_button"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flat_code" />
 
 
     <Button
         android:id="@+id/leave_flat_button"
-        android:background="@drawable/button_style"
         android:layout_width="0dp"
-        android:layout_marginHorizontal="15dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/button_style"
         android:text="@string/leave_flat_button_title"
         android:textAllCaps="false"
         android:textColor="@color/text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,14 +15,14 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 
-class DatabaseService(val auth: FirebaseAuth) {
-    val database = Firebase.firestore
+class DatabaseService(private val auth: FirebaseAuth) {
+    private val database = Firebase.firestore
     val users: CollectionReference
         get() = database.collection("users")
     val flats: CollectionReference
         get() = database.collection("flats")
 
-    val userId: String?
+    private val userId: String?
         get() = auth.currentUser?.uid
 
 
@@ -45,7 +45,9 @@ class DatabaseService(val auth: FirebaseAuth) {
                 listOf(
                     mapOf(
                         Pair("userId", it),
-                        Pair("userName", auth.currentUser?.displayName ?: "")
+                        Pair("userName", auth.currentUser?.displayName ?: ""),
+                        Pair("profilePic", auth.currentUser?.photoUrl.toString())
+
                     )
                 )
             )
@@ -56,7 +58,7 @@ class DatabaseService(val auth: FirebaseAuth) {
 
     }
 
-    private fun getToken(){
+    private fun getToken() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -73,26 +75,30 @@ class DatabaseService(val auth: FirebaseAuth) {
     suspend fun assignFlatToUser(id: String) {
         userId?.let {
             users.document(it).update(mapOf(Pair("flatId", id))).await()
-            flats.document(id).update("usersList", (FieldValue.arrayUnion(mapOf(
-                Pair("userId", it),
-                Pair("userName", auth.currentUser?.displayName ?: "")
-            ))) )
+            flats.document(id).update(
+                "usersList", (FieldValue.arrayUnion(
+                    mapOf(
+                        Pair("userId", it),
+                        Pair("userName", auth.currentUser?.displayName ?: ""),
+                        Pair("profilePic", auth.currentUser?.photoUrl.toString())
+                    )
+                ))
+            )
         }
     }
 
-
-
-    //    fun updateFlat(){
-//        flatInternal = user.value?.flatId?.let { flats.document(it).get().result?.toObject<Flat>() }
-//    }
-//
     fun removeFlatFromUser(userId: String, flatId: String) {
 
         users.document(userId).update(mapOf(Pair("flatId", null)))
-        flats.document(flatId).update("usersList", (FieldValue.arrayRemove(mapOf(
-            Pair("userId", userId),
-            Pair("userName", auth.currentUser?.displayName ?: "")
-        ))) )
+        flats.document(flatId).update(
+            "usersList", (FieldValue.arrayRemove(
+                mapOf(
+                    Pair("userId", userId),
+                    Pair("userName", auth.currentUser?.displayName ?: ""),
+                    Pair("profilePic", auth.currentUser?.photoUrl.toString())
+                )
+            ))
+        )
 
     }
 

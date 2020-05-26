@@ -46,7 +46,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             startActivity(sendIntent)
         }
 
-        myClipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        myClipboard =
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     }
 
@@ -57,7 +58,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
 
-    fun generateQrCode(flatId: String) {
+    private fun generateQrCode(flatId: String) {
         val multiFormatWriter = MultiFormatWriter()
         try {
             val bitMatrix =

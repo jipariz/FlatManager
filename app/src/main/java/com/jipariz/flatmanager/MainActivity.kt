@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -18,15 +20,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivityMainBinding
     private val job = Job()
 
-    val model: MainViewModel by inject()
+    private val model: MainViewModel by inject()
 
     private lateinit var navController: NavController
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +51,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         //super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.bottom_menu,menu)
-        binding.navigationView.setupWithNavController(menu!!,navController)
+        menuInflater.inflate(R.menu.bottom_menu, menu)
+        binding.navigationView.setupWithNavController(menu!!, navController)
 
         return true
     }
@@ -61,20 +63,36 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun renderState(it: PageState?) {
-        when {
-            it?.flat == null -> {
-                navController.navigate(R.id.nav_join,null)
+        when (it?.flat) {
+            null -> {
+                navController.navigate(R.id.nav_join, null)
 
                 binding.navigationView.hide()
             }
             else -> {
-                if(navController.currentDestination?.id == R.id.nav_join) navController.navigate(R.id.nav_home,null)
+                if (navController.currentDestination?.id == R.id.nav_join) navController.navigate(
+                    R.id.nav_home,
+                    null
+                )
 
                 binding.navigationView.show()
             }
         }
 
 
+    }
+
+    private var doubleBackToExitPressedOnce = false
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finish()
+            exitProcess(0);
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 
     override fun onStart() {

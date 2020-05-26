@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_marginTop="8dp"
-    app:cardBackgroundColor="@color/primary_light"
     android:elevation="2dp"
-
+    app:cardBackgroundColor="@color/primary_light"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,16 +24,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_picture"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_margin="8dp"
             android:contentDescription="@string/profile_picture"
             android:foregroundGravity="center"
+            android:src="@drawable/ic_profile"
+            app:civ_border="true"
+            app:civ_border_color="@color/accent"
+            app:civ_border_width="2dp"
             app:layout_constraintStart_toStartOf="@id/week_view"
-            app:layout_constraintTop_toBottomOf="@id/week_view"
-            android:src="@drawable/ic_profile" />
+            app:layout_constraintTop_toBottomOf="@id/week_view" />
 
 
         <TextView
@@ -46,8 +48,8 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="30sp"
             android:textColor="@color/primary_text"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_picture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile_picture"
@@ -55,37 +57,37 @@
             tools:text="Dummy" />
 
         <Button
-            android:background="@drawable/button_style"
             android:id="@+id/clean_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/finish_clean"
-            android:textColor="@color/text"
-
+            android:background="@drawable/button_style"
             android:focusableInTouchMode="false"
+            android:text="@string/finish_clean"
+
+            android:textColor="@color/text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/clean_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_check"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="8dp"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/clean_pending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_brush"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="8dp"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

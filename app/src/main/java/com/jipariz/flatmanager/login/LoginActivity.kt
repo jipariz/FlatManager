@@ -28,12 +28,12 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-class LoginActivity: AppCompatActivity(), CoroutineScope {
+class LoginActivity : AppCompatActivity(), CoroutineScope {
     private val job = Job()
 
-    val RC_SIGN_IN: Int = 1
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private val RC_SIGN_IN: Int = 1
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInOptions: GoogleSignInOptions
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -109,8 +109,6 @@ class LoginActivity: AppCompatActivity(), CoroutineScope {
         }
         binding.progress.visibility = View.GONE
     }
-
-
 
 
     companion object {

@@ -17,19 +17,17 @@ import com.jipariz.flatmanager.global.map
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
+class MainViewModel(private val databaseService: DatabaseService) : ViewModel() {
 
     var flatRef: ListenerRegistration? = null
     var flatDocReference: DocumentReference? = null
 
     fun getData() {
-        //fetchUser()
         userListener()
     }
 
 
-
-    fun userListener() {
+    private fun userListener() {
         userId?.let {
             val docRef = databaseService.users.document(it)
             docRef.addSnapshotListener { snapshot, e ->
@@ -54,11 +52,11 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
         }
     }
 
-    fun flatListener(id: String) {
+    private fun flatListener(id: String) {
         try {
             state.user?.flatId?.let {
                 flatDocReference = databaseService.flats.document(it)
-                    flatRef = flatDocReference?.addSnapshotListener { snapshot, e ->
+                flatRef = flatDocReference?.addSnapshotListener { snapshot, e ->
 
                     if (e != null) {
                         Log.w("", "Listen failed.", e)
@@ -124,20 +122,23 @@ class MainViewModel(val databaseService: DatabaseService) : ViewModel() {
         }
     }
 
-    fun removeFlat(){
+    fun removeFlat() {
         viewModelScope.launch {
-            state.user?.userId?.let { state.user?.flatId?.let { it1 ->
-                databaseService.removeFlatFromUser(it,
-                    it1
-                )
-            } }
+            state.user?.userId?.let {
+                state.user?.flatId?.let { it1 ->
+                    databaseService.removeFlatFromUser(
+                        it,
+                        it1
+                    )
+                }
+            }
             flatRef?.remove()
             flatRef = null
             state = state.copy(flat = null)
         }
     }
 
-    fun clean(){
+    fun clean() {
         flatDocReference?.update("weekCleanFinished", true)
 
     }
