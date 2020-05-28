@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "234317845429",
+    "firebase_url": "https://flatmanager-d7d73.firebaseio.com",
+    "project_id": "flatmanager-d7d73",
+    "storage_bucket": "flatmanager-d7d73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234317845429:android:5cd2311ba83b9db3b3fffc",
+        "android_client_info": {
+          "package_name": "com.jipariz.flatmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234317845429-lrakcl1m8krc2bdnd6sfm3af44q1228n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jipariz.flatmanager",
+            "certificate_hash": "a9ccae9f91c72c47f43e8c157ecb8ec8ceb36766"
+          }
+        },
+        {
+          "client_id": "234317845429-hhf1qg2ddiocoh209t414v8jc2bbcs7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBIsvSzPk5EuQzEIILtz00zp44BqzYqzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234317845429-hhf1qg2ddiocoh209t414v8jc2bbcs7n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
